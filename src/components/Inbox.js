@@ -58,18 +58,18 @@ export default class Inbox extends React.Component {
         }))
     }
 
-    markAsRead = (id) => {
-        this.toggleReadState(true, id)
+    markAsRead = () => {
+        this.toggleReadState(true)
     }
 
     markAsUnread = () => {
         this.toggleReadState(false)
     }
 
-    toggleReadState = (readState, id) => {
+    toggleReadState = (readState) => {
         this.setState((prevState) => ({
             emails: prevState.emails.map((email) => {
-                if (email.id === id || (id === undefined && email.selected)) {
+                if (email.selected) {
                     email.read = readState
                 }
                 return email

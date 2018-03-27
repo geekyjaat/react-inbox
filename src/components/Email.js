@@ -48,8 +48,8 @@ export default class Email extends React.Component {
                             </div>
                             <div className="col-xs-2">
                                 {this.props.email.starred ?
-                                    (<i onClick={this.toggleStar} className="star fa fa-star-o"></i>) :
-                                    (<i onClick={this.toggleStar} className="star fa fa-star"></i>)
+                                    (<i onClick={this.toggleStar} className="star fa fa-star"></i>) :
+                                    (<i onClick={this.toggleStar} className="star fa fa-star-o"></i>)
                                 }
                             </div>
                         </div>
