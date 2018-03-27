@@ -20,15 +20,12 @@ const Toolbar = ({
                 <a className="btn btn-danger">
                     <i className="fa fa-plus"></i>
                 </a>
-                <button className="btn btn-default">
+                <button className="btn btn-default" onClick={toggleSelection}>
                     {noneSelected ?
-                        <i onClick={toggleSelection}
-                            className="fa fa-square-o"></i> :
+                        <i className="fa fa-square-o"></i> :
                         (allSelected ?
-                            <i onClick={toggleSelection}
-                                className="fa fa-check-square-o"></i> :
-                            <i onClick={toggleSelection}
-                                className="fa fa-minus-square-o"></i>
+                            <i className="fa fa-check-square-o"></i> :
+                            <i className="fa fa-minus-square-o"></i>
                         )
                     }
                 </button>
