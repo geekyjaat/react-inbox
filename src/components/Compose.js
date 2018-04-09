@@ -3,7 +3,17 @@ import React from 'react';
 export default class Compose extends React.Component {
     render() {
         return (
-            <form className="form-horizontal well">
+            <form
+                onSubmit={e => {
+                    this.props.addNewMessage({
+                        subject: e.target.subject.value,
+                        body: e.target.body.value
+                    })
+                    e.preventDefault()
+                    e.target.reset()
+                    e.target.focus()
+                }}
+                className="form-horizontal well">
                 <div className="form-group">
                     <div className="col-sm-8 col-sm-offset-2">
                         <h4>Compose Message</h4>

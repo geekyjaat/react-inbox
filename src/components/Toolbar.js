@@ -9,7 +9,8 @@ const Toolbar = ({
     markAsUnread,
     addLabel,
     removeLabel,
-    deleteEmails
+    deleteEmails,
+    toggleCompose
 }) => {
     return (
         <div className="row toolbar">
@@ -17,9 +18,9 @@ const Toolbar = ({
                 <p className="pull-right">
                     <span className="badge badge">{noOfunread}</span>
                     unread messages</p>
-                <a className="btn btn-danger">
+                <button className="btn btn-danger" onClick={toggleCompose}>
                     <i className="fa fa-plus"></i>
-                </a>
+                </button>
                 <button className="btn btn-default" onClick={toggleSelection}>
                     {noneSelected ?
                         <i className="fa fa-square-o"></i> :

@@ -3,31 +3,67 @@ import Labels from './Labels';
 
 export default class Email extends React.Component {
 
-    state = {
-        showBody: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: this.props.email,
+            showBody: false
+        }
     }
 
-    toggleBody = (e) => {
-        e.preventDefault()
-        this.setState((prevState) => ({
-            showBody: !prevState.showBody
-        }))
-        if (!this.props.email.read)
-            this.props.markAsRead(this.props.email.id)
+    toggleBody = async (e) => {
+        e.preventDefault();
+        if (!this.state.showBody) {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/messages/` + this.state.email.id)
+            const message = await response.json()
+            this.setState({
+                ...this.state,
+                email: {
+                    ...this.state.email,
+                    body: message.body
+                }
+            })
+        }
+        this.setState({
+            ...this.state,
+            showBody: !this.state.showBody
+        })
+    }
+
+    async flipStar(id, star) {
+        await fetch(`${process.env.REACT_APP_API_URL}/api/messages/`, {
+            method: 'PATCH',
+            body: JSON.stringify(),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
     }
 
     toggleStar = () => {
-        this.props.toggleStar(this.props.email.id)
+        this.props.patch({
+            messageIds: [this.state.email.id],
+            command: 'star',
+            star: !this.state.email.starred
+        })
+        this.setState({
+            ...this.state,
+            email: {
+                ...this.state.email,
+                starred: !this.state.email.starred
+            }
+        })
     }
 
     toggleSelect = () => {
-        this.props.toggleSelect(this.props.email.id)
+        this.props.toggleSelect(this.state.email.id)
     }
 
     render() {
         return (
             <div className="col-md-12">
-                <div className={this.props.email.read ?
+                <div className={this.state.email.read ?
                     (this.props.email.selected ?
                         'row message read selected' :
                         'row message read'
@@ -47,22 +83,22 @@ export default class Email extends React.Component {
                                 />
                             </div>
                             <div className="col-xs-2">
-                                {this.props.email.starred ?
+                                {this.state.email.starred ?
                                     (<i onClick={this.toggleStar} className="star fa fa-star"></i>) :
                                     (<i onClick={this.toggleStar} className="star fa fa-star-o"></i>)
                                 }
                             </div>
                         </div>
                     </div>
-                    <div className="col-xs-11">
-                        <Labels labels={this.props.email.labels} />
-                        <a href="" onClick={this.toggleBody}>{this.props.email.subject}</a>
+                    <div className="col-xs-11" onClick={this.toggleBody}>
+                        <Labels labels={this.state.email.labels} />
+                        <a href="">{this.state.email.subject}</a>
                     </div>
                 </div>
                 {this.state.showBody &&
                     <div className="row message-body">
                         <div className="col-xs-11 col-xs-offset-1">
-                            This is the body of the message.</div>
+                            {this.state.email.body}</div>
                     </div>
                 }
             </div>
