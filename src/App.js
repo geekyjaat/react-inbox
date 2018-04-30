@@ -5,7 +5,7 @@ import Inbox from './components/Inbox';
 
 class App extends Component {
   render() {
-    return <Inbox emails={this.props.emails}/>;
+    return <Inbox/>;
   }
 }
 

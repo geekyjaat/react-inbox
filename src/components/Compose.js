@@ -1,14 +1,18 @@
 import React from 'react';
 
-export default class Compose extends React.Component {
+import { bindActionCreators } from 'redux';
+import * as Actions from '../actions';
+import { connect } from 'react-redux';
+
+class Compose extends React.Component {
     render() {
         return (
             <form
                 onSubmit={e => {
-                    this.props.addNewMessage({
-                        subject: e.target.subject.value,
-                        body: e.target.body.value
-                    })
+                    this.props.actions.sendMessage(
+                        e.target.subject.value,
+                        e.target.body.value
+                    )
                     e.preventDefault()
                     e.target.reset()
                     e.target.focus()
@@ -40,3 +44,15 @@ export default class Compose extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(Actions, dispatch)
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Compose)
