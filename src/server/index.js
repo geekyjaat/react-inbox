@@ -21,7 +21,7 @@ export const flipStar = async (id, star) => {
 }
 
 export const getEmails = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/messages`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/messages?delay=500`)
     const json = await response.json()
     const emails = await json._embedded.messages
     return emails
@@ -46,4 +46,5 @@ export const getBody = async (id) => {
     const message = await response.json()
     const body = await message.body
     return body;
+
 }
